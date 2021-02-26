@@ -23,10 +23,10 @@ const ColorList = ({ colors, updateColors }) => {
     axiosWithAuth()
       .put(`http://localhost:5000/api/colors/${colorToEdit.id}`, colorToEdit)
       .then((res) => {
-        console.log(res.data.id);
+        // console.log(res.data.id);
 
         const newColorList = colors.map((color) => {
-          console.log(color)
+          // console.log(color)
           if (color.id === res.data.id) {
             // console.log("yes");
             return colorToEdit
@@ -35,7 +35,7 @@ const ColorList = ({ colors, updateColors }) => {
             return color
           }
         });
-console.log(newColorList)
+// console.log(newColorList)
         updateColors(newColorList);
 
         setEditing(false);
@@ -47,7 +47,7 @@ console.log(newColorList)
     axiosWithAuth()
       .delete(`http://localhost:5000/api/colors/${color.id}`)
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         updateColors(colors.filter((col) => +col.id !== +color.id));
       })
       .catch((err) => console.log(err));

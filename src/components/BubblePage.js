@@ -3,16 +3,19 @@ import {axiosWithAuth} from "../helpers/axiosWithAuth";
 
 import Bubbles from "./Bubbles";
 import ColorList from "./ColorList";
+import getData from './getData';
 
 const BubblePage = () => {
   const [colorList, setColorList] = useState([]);
-console.log('COLORLIST', colorList)
+// console.log('COLORLIST', colorList)
 
   useEffect(() => {
-    axiosWithAuth()
-      .get('http://localhost:5000/api/colors')
+    getData()
+    // axiosWithAuth()
+    //   .get('http://localhost:5000/api/colors')
       .then(res => {
-        setColorList(res.data)
+        console.log(res)
+        setColorList(res)
       })
       .catch((err) => console.log(err));
   }, []);
