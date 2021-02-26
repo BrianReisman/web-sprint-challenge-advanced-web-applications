@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
-import {axiosWithAuth} from '../utils/axiosWithAuth';
+import {axiosWithAuth} from '../helpers/axiosWithAuth';
 
 const initState = {
   username: "Lambda School",

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import EditMenu from "./EditMenu";
-import { axiosWithAuth } from "../utils/axiosWithAuth";
+import { axiosWithAuth } from "../helpers/axiosWithAuth";
 
 const initialColor = {
   color: "",
@@ -15,23 +15,40 @@ const ColorList = ({ colors, updateColors }) => {
   const editColor = (color) => {
     setEditing(true);
     setColorToEdit(color);
-    console.log(color);
   };
 
   const saveEdit = (e) => {
     e.preventDefault();
 
-    setEditing(false);
+    axiosWithAuth()
+      .put(`http://localhost:5000/api/colors/${colorToEdit.id}`, colorToEdit)
+      .then((res) => {
+        console.log(res.data.id);
+
+        const newColorList = colors.map((color) => {
+          console.log(color)
+          if (color.id === res.data.id) {
+            // console.log("yes");
+            return colorToEdit
+          } else {
+            // console.log("not");
+            return color
+          }
+        });
+console.log(newColorList)
+        updateColors(newColorList);
+
+        setEditing(false);
+      })
+      .catch((err) => console.log(err));
   };
 
   const deleteColor = (color) => {
-    //update database
-    console.log(color.id)
     axiosWithAuth()
-      .delete(`/colors/${color.id}`)
+      .delete(`http://localhost:5000/api/colors/${color.id}`)
       .then((res) => {
         console.log(res);
-        updateColors(colors.filter((col) => col.id !== color.id)); //updates UI
+        updateColors(colors.filter((col) => +col.id !== +color.id));
       })
       .catch((err) => console.log(err));
   };
