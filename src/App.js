@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import PrivateRoute from './utils/PrivateRoute';
 import BubblesPage from './components/BubblePage';
@@ -18,6 +18,3 @@ function App() {
 }
 
 export default App;
-
-//Task List:
-//1. Render BubblePage as a PrivateRoute
