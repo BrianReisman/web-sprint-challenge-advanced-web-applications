@@ -11,6 +11,7 @@ const initState = {
 const Login = () => {
   const [form, setForm] = useState(initState);
   const { push } = useHistory();
+  const [err, setErr] = useState(false);
 
   // useEffect(() => {
   //   axios
@@ -35,6 +36,7 @@ const Login = () => {
   // });
 
   const changeHandler = (e) => {
+    setErr(false)
     setForm({ ...form, [e.target.id]: e.target.value });
   };
 
@@ -56,10 +58,10 @@ const Login = () => {
   
 
 
-
         push("/bubbles");
       })
       .catch((err) => console.log(err));
+      setErr(true)
   };
 
   return (
@@ -88,6 +90,9 @@ const Login = () => {
             onChange={changeHandler}
           />
         </label>
+        {
+          err && <p>Username or Password not valid</p>
+        }
         <button>Login</button>
       </form>
     </>
@@ -96,5 +101,5 @@ const Login = () => {
 
 export default Login;
 
-//3. MAKE SURE THAT FORM INPUTS INCLUDE THE LABEL TEXT "username" and "password" RESPECTIVELY.
+
 //4. If either the username or password is not displaied display EXACTLY the following words: Username or Password not valid.
