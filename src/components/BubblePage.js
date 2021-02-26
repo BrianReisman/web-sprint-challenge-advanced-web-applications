@@ -6,6 +6,7 @@ import ColorList from "./ColorList";
 
 const BubblePage = () => {
   const [colorList, setColorList] = useState([]);
+console.log('COLORLIST', colorList)
 
   useEffect(() => {
     axiosWithAuth()
@@ -14,7 +15,7 @@ const BubblePage = () => {
         setColorList(res.data)
       })
       .catch((err) => console.log(err));
-  }, [setColorList]);
+  }, []);
 
   return (
     <>
