@@ -1,36 +1,80 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {useHistory} from 'react-router-dom';
+
+const initState = {
+  username: "Lambda School",
+  password: "i<3Lambd4",
+};
 
 const Login = () => {
+  const [form, setForm] = useState(initState);
+  const {push} = useHistory();
+
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
 
-  useEffect(()=>{
+  useEffect(() => {
     axios
       .delete(`http://localhost:5000/api/colors/1`, {
-        headers:{
-          'authorization': "ahuBHejkJJiMDhmODZhZi0zaeLTQ4ZfeaseOGZgesai1jZWYgrTA07i73Gebhu98"
-        }
+        headers: {
+          authorization:
+            "ahuBHejkJJiMDhmODZhZi0zaeLTQ4ZfeaseOGZgesai1jZWYgrTA07i73Gebhu98",
+        },
       })
-      .then(res=>{
-        axios.get(`http://localhost:5000/api/colors`, {
-          headers:{
-            'authorization': ""
-          }
-        })
-        .then(res=> {
-          console.log(res);
-        });
+      .then((res) => {
+        axios
+          .get(`http://localhost:5000/api/colors`, {
+            headers: {
+              authorization: "",
+            },
+          })
+          .then((res) => {
+            console.log(res);
+          });
         console.log(res);
-      })
+      });
   });
+
+  const changeHandler = (e) => {
+    setForm({ ...form, [e.target.id]: e.target.value });
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:5000/api/login", form)
+      .then((res) => {
+        localStorage.setItem('token', JSON.stringify(res.data.payload))
+        push('/bubblesPage')
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <>
-      <h1>
-        Welcome to the Bubble App!
-        <p>Build a login page here</p>
-      </h1>
+      <h1>Welcome to the Bubble App</h1>
+      <form onSubmit={submitHandler}>
+        <label htmlFor="username">
+          <input
+            type="text"
+            id="username"
+            placeholder="username"
+            value={form.username}
+            onChange={changeHandler}
+          />
+        </label>
+        <label htmlFor="password">
+          <input
+            type="password"
+            id="password"
+            placeholder="password"
+            value={form.password}
+            onChange={changeHandler}
+          />
+        </label>
+        <button>Login</button>
+      </form>
     </>
   );
 };
