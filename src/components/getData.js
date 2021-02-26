@@ -4,10 +4,10 @@ const getColorData = () => {
   return axiosWithAuth()
     .get('/colors')
     .then(res => {
-      return (res.data);
+      return res;
     })
     .catch(err => {
-      console.log(err);
+      return err;
     })
 }
 

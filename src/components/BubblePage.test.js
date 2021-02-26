@@ -1,9 +1,13 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import BubblePage from "./BubblePage";
-import Bubbles from './Bubbles';
+import Bubbles from "./Bubbles";
+import App from "../App";
+import { getData as mockGetData } from "./getData";
 
-let mockData = [ //copied from handlers.js
+jest.mock('./getData')
+let mockData = [
+  //copied from handlers.js
   {
     color: "aliceblue",
     code: {
@@ -32,17 +36,13 @@ test("Renders BubblePage without errors", () => {
 });
 
 test("Fetches data and renders the bubbles on mounting", async () => {
-  render(<Bubbles colors={mockData}/>);
+  mockGetData.mockResolvedValueOnce(mockData);
+  render(<BubblePage />);
 
-await waitFor(()=>{
-  expect(screen.getByText(/lime/i)).toBeInTheDocument()
-})
-
-// const limeGreen  = await 
-  // const limeGreenColor = await waitFor ( () => (screen.findByText(/limegreen/i)))
-  // expect(limeGreenColor).toBeInTheDocument();
+  const color = screen.queryByText(/aliceblue/i);
+  expect(color).toBeInTheDocument();
 });
 
-//Task List
+////Task List
 ////1. Setup test for basic rendering of component
-//2. Setup test for initial rendering of bubbles on loading
+////2. Setup test for initial rendering of bubbles on loading
