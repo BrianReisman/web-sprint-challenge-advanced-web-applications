@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import {axiosWithAuth} from '../utils/axiosWithAuth';
 
 const initState = {
   username: "Lambda School",
@@ -11,27 +12,27 @@ const Login = () => {
   const [form, setForm] = useState(initState);
   const { push } = useHistory();
 
-  useEffect(() => {
-    axios
-      .delete(`http://localhost:5000/api/colors/1`, {
-        headers: {
-          authorization:
-            "ahuBHejkJJiMDhmODZhZi0zaeLTQ4ZfeaseOGZgesai1jZWYgrTA07i73Gebhu98",
-        },
-      })
-      .then((res) => {
-        axios
-          .get(`http://localhost:5000/api/colors`, {
-            headers: {
-              authorization: "",
-            },
-          })
-          .then((res) => {
-            console.log(res);
-          });
-        console.log(res);
-      });
-  });
+  // useEffect(() => {
+  //   axios
+  //     .delete(`http://localhost:5000/api/colors/1`, {
+  //       headers: {
+  //         authorization:
+  //           "ahuBHejkJJiMDhmODZhZi0zaeLTQ4ZfeaseOGZgesai1jZWYgrTA07i73Gebhu98",
+  //       },
+  //     })
+  //     .then((res) => {
+  //       axios
+  //         .get(`http://localhost:5000/api/colors`, {
+  //           headers: {
+  //             authorization: "",
+  //           },
+  //         })
+  //         .then((res) => {
+  //           console.log(res);
+  //         });
+  //       console.log(res);
+  //     });
+  // });
 
   const changeHandler = (e) => {
     setForm({ ...form, [e.target.id]: e.target.value });
@@ -43,6 +44,19 @@ const Login = () => {
       .post("http://localhost:5000/api/login", form)
       .then((res) => {
         localStorage.setItem("token", JSON.stringify(res.data.payload));
+
+
+        // axiosWithAuth()
+        // .get('http://localhost:5000/api/colors')
+        // .then(res => {
+        //   console.log(res)
+        //   // setColorList(res.data)
+        // })
+        // .catch((err) => console.log(err));
+  
+
+
+
         push("/bubbles");
       })
       .catch((err) => console.log(err));

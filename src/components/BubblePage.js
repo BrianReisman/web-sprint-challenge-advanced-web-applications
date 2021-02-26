@@ -9,8 +9,10 @@ const BubblePage = () => {
 
   useEffect(() => {
     axiosWithAuth()
-      .get('')
-      .then()
+      .get('http://localhost:5000/api/colors')
+      .then(res => {
+        setColorList(res.data)
+      })
       .catch((err) => console.log(err));
   }, []);
 
@@ -23,6 +25,3 @@ const BubblePage = () => {
 };
 
 export default BubblePage;
-
-//Task List:
-// 1. Make an axios call to retrieve all color data and push to state on mounting.

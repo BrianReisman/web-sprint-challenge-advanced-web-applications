@@ -11,7 +11,7 @@ function App() {
     <Router>
       <div className="App">
         <Route exact path="/" component={Login} />
-        <PrivateRoute path="/bubblesPage" component={BubblesPage}/>
+        <PrivateRoute path="/bubbles" component={BubblesPage}/>
       </div>
     </Router>
   );
